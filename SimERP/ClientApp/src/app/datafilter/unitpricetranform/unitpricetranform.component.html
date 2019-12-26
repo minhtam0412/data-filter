@@ -1,0 +1,60 @@
+<form #form="ngForm" novalidate>
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">Quy đổi đơn giá USD</h4>
+      <button type="button" class="close" data-dismiss="modal" (click)="closeDialog()">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <div class="form_content_v2">
+        <br>
+        <div class="table-responsive_v2">
+          <!-- Table  -->
+          <table class="table table-bordered table-striped table-hover">
+            <!-- Table head -->
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Tên hàng</th>
+              <th>Số lượng quy đổi (kg)</th>
+              <th>Trị giá</th>
+              <th>Nguyên tệ</th>
+              <th>Trị giá USD</th>
+              <th>Tỷ giá USD</th>
+              <th>Đơn giá quy đổi(USD/kg)</th>
+            </tr>
+            </thead>
+            <!-- Table head -->
+            <!-- Table body -->
+            <tbody>
+            <tr *ngFor="let row of lstDataResultTmp; let index = index">
+              <td class="order-number">{{index + 1}} </td>
+              <td class="col-name">{{row.ChungLoaiHangHoaXuatNhap}}</td>
+              <td class="col-name">{{row.SoLuongQuyDoi}}</td>
+              <td class="col-name">{{row.TriGia}}</td>
+              <td class="col-name">{{row.NgoaiTeThanhToan}}</td>
+              <td class="col-name">{{row.TriGiaUsd}}</td>
+              <td class="col-name">{{row.TyGiaUsd}}</td>
+              <td class="col-name">{{row.DonGiaUSD}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-12" style="text-align: right">
+          <label style="font-weight: bold">Số lượng sản phẩm: {{this.lstDataResultTmp.length}}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" name="btnSave" class="btn btn-info btn-sm" (click)="updateData()">
+        <i class="far fa-save"></i> Đồng ý
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDialog()">Đóng
+      </button>
+    </div>
+  </div>
+</form>

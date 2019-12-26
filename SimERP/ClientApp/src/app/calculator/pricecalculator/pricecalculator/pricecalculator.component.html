@@ -1,0 +1,334 @@
+<div class="form_content_v2" style="height: 100%; overflow-y: auto;">
+    <section class="">
+        <form>
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Bảng tính giá</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Bảng giá hàng về kho Long Hậu</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div> -->
+            <div class="row">
+                <div *ngIf="this.storeid == 1" class="col-sm-6 text-left">
+                    <p class="text-uppercase" style="font-size:18px;color: #3092c0; font-weight:bold; font-family: 'Lato', sans-serif;"><span>Bảng tính giá hàng từ kho Long Hậu</span></p>
+                </div>
+                <div *ngIf="this.storeid == 2" class="col-sm-6 text-left">
+                    <p class="text-uppercase" style="font-size:18px;color: tan; font-weight:bold; font-family: 'Lato', sans-serif;"><span>Bảng tính giá hàng từ kho Bắc Ninh</span></p>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-info btn-sm" style="width: 140px;" (click)="clearModel()">
+                                        <i class="fas fa-plus-circle"></i> Tạo mới
+                        </button>&nbsp;
+                        <button type="button" class="btn btn-info btn-sm" style="width: 140px;" (click)="saveDataModel(false)">
+                                            <i class="far fa-save"></i> Lưu vào danh sách
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="tableinfo">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="lableName">Mã hàng hóa</td>
+                                <td colspan="3">
+                                    <input type="text" [(ngModel)]="objModel.MaHh" name="ProductCode" class="form-control form-control-sm codedatachange" (keydown)="Product_onKeydown($event)" select-value-of="Id" ngui-auto-complete [source]="this.lstProduct" [accept-user-input]="true" [list-formatter]="Product_renderDataRowAutoComplete"
+                                        placeholder="--Chọn Mã/Tên hàng hóa--" display-property-name="ProductCode" [dropdown-custom-class]="''" [dropdown-custom-width]="700" [max-Height]="300" (valueChanged)="Product_autocompleteCallback($event)" [header-item-template]="Product_autocompleteHeaderTemplate"
+                                        no-match-found-text='Không có dữ liệu' min-chars="0" value-property-name="ProductCode" tab-to-select='true' (blur)="clearValueProduct()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Tên hàng hóa</td>
+                                <td colspan="3"><input type="text" value="{{objModel.TenHh}}" name="ProductName" disabled placeholder="Tên hàng hóa" required maxlength="250" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Thuế nhập khẩu (%)</td>
+                                <td style="width: 15%; background-color: #e9ecef;"><input type="text" value="{{objModel.ThueNk}}" name="Vatproduct" disabled style="text-align: right;" placeholder="0" required maxlength="250" class="form-control form-control-sm"></td>
+                                <td style="width: 25%;" class="lableName">Giá CIF (đơn vị tiền/Kg)</td>
+                                <td>
+                                    <input *ngIf="this.storeid == 1" type="text" width="80%" [ngClass]="{ 'valuechange': objModel.IdColorGiaCif== 1}" (keypress)="isNumberKey($event,'IdColorGiaCif')" style="width: 60%; float: left; text-align: right; border-right: none;" class="form-control form-control-sm codedatachange"
+                                        (keydown)="CIF_onKeydown($event)" select-value-of="Id" display-property-name="Cifsouth" ngui-auto-complete [source]="this.lstProductCIFPrice" [list-formatter]="CIF_renderDataRowAutoComplete" placeholder="-Chọn Giá CIF-"
+                                        [dropdown-custom-class]="''" [dropdown-custom-width]="400" [max-Height]="300" (valueChanged)="CIF_autocompleteCallback($event)" [header-item-template]="CIF_autocompleteHeaderTemplate" no-match-found-text='Không có dữ liệu'
+                                        min-chars="0" value-property-name="Cifsouth" tab-to-select='true' [(ngModel)]="objModel.GiaCif" name="GiaCIF" (ngModelChange)="reportDataResultProduct()" (blur)="clearValueCIF()">
+
+                                    <input *ngIf="this.storeid == 2" type="text" width="80%" [ngClass]="{ 'valuechange': objModel.IdColorGiaCif== 1}" (keypress)="isNumberKey($event,'IdColorGiaCif')" style="width: 60%; float: left; text-align: right; border-right: none;" class="form-control form-control-sm codedatachange"
+                                        (keydown)="CIF_onKeydown($event)" select-value-of="Id" display-property-name="Cifsouth" ngui-auto-complete [source]="this.lstProductCIFPrice" [list-formatter]="CIF_renderDataRowAutoComplete_North" placeholder="-Chọn Giá CIF-"
+                                        [dropdown-custom-class]="''" [dropdown-custom-width]="400" [max-Height]="300" (valueChanged)="CIF_autocompleteCallback($event)" [header-item-template]="CIF_autocompleteHeaderTemplate" no-match-found-text='Không có dữ liệu'
+                                        min-chars="0" value-property-name="Cifsouth" tab-to-select='true' [(ngModel)]="objModel.GiaCif" name="GiaCIF" (ngModelChange)="reportDataResultProduct()" (blur)="clearValueCIF()">
+
+                                    <input type="text" value="{{objModel.LoaiTien}}" name="LoaiTien" disabled style="text-align: center; width: 40%; background-color: #fff; border-left: none;" maxlength="250" class="form-control form-control-sm codedatachange">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Chênh lệch tỷ giá</td>
+                                <td><input type="text" disabled style="text-align: right;" value="{{objModel.ChenhLechTyGia}}" name="ChenhLechTyGia" placeholder="0" class="form-control form-control-sm"></td>
+                                <td class="lableName">Tỷ giá</td>
+                                <td><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorTyGia== 1}" (keypress)="isNumberKey($event,'IdColorTyGia')" [(ngModel)]="objModel.TyGia" name="TyGia" (ngModelChange)="reportDataResultProduct()" placeholder="0"
+                                        required maxlength="250" class="form-control form-control-sm datachange"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Phí về kho (VND/Kg)</td>
+                                <td style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCpveKho== 1}" (keypress)="isNumberKey($event,'IdColorCpveKho')" [(ngModel)]="objModel.CpveKho" name="CPVeKho" (ngModelChange)="reportDataResultProduct()" placeholder="0"
+                                        required maxlength="250" class="form-control form-control-sm datachange"></td>
+                                <td class="lableName">Phí bốc xếp (VND/Kg/2 chiều)</td>
+                                <td style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCpbocXep== 1}" (keypress)="isNumberKey($event,'IdColorCpbocXep')" [(ngModel)]="objModel.CpbocXep" name="CPBocXep" (ngModelChange)="reportDataResultProduct()"
+                                        placeholder="0" required maxlength="250" class="form-control form-control-sm datachange"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Phí lưu kho (VND/Kg/30 Ngày)</td>
+                                <td style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCpluuKho== 1}" (keypress)="isNumberKey($event,'IdColorCpluuKho')" [(ngModel)]="objModel.CpluuKho" name="CPLuuKho" (ngModelChange)="reportDataResultProduct()"
+                                        placeholder="0" required maxlength="250" class="form-control form-control-sm datachange"></td>
+                                <td class="lableName">Thời gian lưu kho TB (ngày)</td>
+                                <td style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorTgluuKhoTb== 1}" (keypress)="isNumberKey($event,'IdColorTgluuKhoTb')" [(ngModel)]="objModel.TgluuKhoTb" name="TGLuuKhoTB" (ngModelChange)="reportDataResultProduct()"
+                                        placeholder="0" required maxlength="250" class="form-control form-control-sm datachange"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Chi phí lưu kho (VND/Kg)</td>
+                                <td colspan="3" style="background-color: #e9ecef;">
+                                    <a data-toggle="tooltip" data-placement="top" title="= Phí lưu kho * Thời gian lưu kho/30">
+                                        <input type="text" disabled style="text-align: right;" value="{{objModel.CpluuKhoTotal | localNumber:'.0-0'}}" name="CpluuKhoTotal" placeholder="0" required maxlength="250" class="form-control form-control-sm">
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="tableinfo">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td class="lableName">Mã khách hàng</td>
+                                <td colspan="5">
+                                    <input type="text" [(ngModel)]="objModel.MaKh" name="MaKH" class="form-control form-control-sm codedatachange" (keydown)="Customer_onKeydown($event)" select-value-of="CusId" ngui-auto-complete [source]="this.lstCustomer" [accept-user-input]="true" [list-formatter]="Customer_renderDataRowAutoComplete"
+                                        placeholder="--Chọn Mã/Tên khách hàng--" display-property-name="CustomerCode" [dropdown-custom-class]="''" [dropdown-custom-width]="660" [max-Height]="300" (valueChanged)="Customer_autocompleteCallback($event)" [header-item-template]="Customer_autocompleteHeaderTemplate"
+                                        no-match-found-text='Không có dữ liệu' min-chars="0" value-property-name="CustomerCode" tab-to-select='true' (blur)="clearValueCustomer()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Tên khách hàng</td>
+                                <td colspan="5" style="background-color: #e9ecef;"><input type="text" value="{{objModel.TenKh}}" disabled placeholder="Tên khách hàng" required maxlength="250" class="form-control form-control-sm"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Địa chỉ giao hàng</td>
+                                <td colspan="5">
+                                    <input type="text" value="{{objModel.DiaChiGh}}" name="DiaChiGH" class="form-control form-control-sm codedatachange" (keydown)="AreaList_onKeydown($event)" select-value-of="Id" ngui-auto-complete [source]="this.lstAreaList" [accept-user-input]="true"
+                                        [list-formatter]="AreaList_renderDataRowAutoComplete" placeholder="--Chọn Địa chỉ giao hàng--" display-property-name="DeliveryAdr" [dropdown-custom-class]="''" [dropdown-custom-width]="660" [max-Height]="300" (valueChanged)="AreaList_autocompleteCallback($event)"
+                                        [header-item-template]="AreaList_autocompleteHeaderTemplate" no-match-found-text='Không có dữ liệu' min-chars="0" value-property-name="DeliveryAdr" tab-to-select='true'>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td class="lableName">Khu vực giao hàng</td>
+                                <td colspan="3"><input type="text" value="{{objModel.KhuVucGh}}" disabled placeholder="Khu vực giao hàng" required maxlength="250" class="form-control form-control-sm"></td>
+                            </tr> -->
+                            <tr>
+                                <td class="lableName">Số lượng giao dự kiến (Kg)</td>
+                                <td colspan="2" style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorSoLuong== 1}" (keypress)="isNumberKey($event,'IdColorSoLuong')" [(ngModel)]="objModel.SoLuong" name="SoLuong" (ngModelChange)="reportDataResultCustomer()" placeholder="0"
+                                        required maxlength="250" class="form-control form-control-sm datachange"></td>
+                                <td class="lableName">Chi phí giao (VND/kg)</td>
+                                <td colspan="2" style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCpgiao== 1}" (keypress)="isNumberKey($event, 'IdColorCpgiao')" [(ngModel)]="objModel.Cpgiao" name="CPGiao" (ngModelChange)="reportDataResultCustomer__Change()"
+                                        placeholder="0" required maxlength="250" class="form-control form-control-sm datachange"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Giá bán hiện hành (VND/Kg)</td>
+                                <td colspan="2" style="background-color: #e9ecef;"><input type="text" style="text-align: right;" disabled value="{{objModel.GiaBanHienHanh | localNumber:'.0-0'}}" name="GiaBanHienHanh" placeholder="0" required maxlength="250" class="form-control form-control-sm"></td>
+                                <td class="lableName">Giá bán dự kiến (VND/Kg)</td>
+                                <td colspan="2" style="background-color: lightcyan;"><input type="text" [ngClass]="{ 'valuechange': objModel.IdColorGiaBanDuKien== 1}" (keypress)="isNumberKey($event,'IdColorGiaBanDuKien')" [(ngModel)]="objModel.GiaBanDuKien" name="GiaBanDuKien" (ngModelChange)="reportDataResultExpectedProfit()"
+                                        placeholder="0" required maxlength="250" class="form-control form-control-sm datachange"></td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Giá bán cũ cho khách hàng (VND/kg)</td>
+                                <td colspan="5" style="background-color: #e9ecef;">
+                                    <table class="" style="text-align: center; width: 100%; background-color: #e9ecef;">
+                                        <tr>
+                                            <td style="border-top: none;  border-left: none; background-color: darkseagreen;" class="lableName">Giá Min</td>
+                                            <td style="border-top: none; background-color: darkseagreen;" class="lableName">Khách hàng</td>
+                                            <td style="border-top: none; background-color: tan;" class="lableName">Giá Max</td>
+                                            <td style="border-top: none; background-color: tan;" class="lableName">Khách hàng</td>
+                                            <td style="border-top: none;  border-right: none; background-color: mediumpurple;" class="lableName">Giá bình quân</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom: none; border-left: none; background-color: darkseagreen;">{{this.objPriced.GiaMin | localNumber:'.0-0'}}</td>
+                                            <td style="border-bottom: none; background-color: darkseagreen;">{{this.objPriced.KhMinName}}</td>
+                                            <td style="border-bottom: none; background-color: tan;">{{this.objPriced.GiaMax | localNumber:'.0-0'}}</td>
+                                            <td style="border-bottom: none; background-color: tan;">{{this.objPriced.KhMaxName}}</td>
+                                            <td style="border-bottom: none; border-right: none; background-color: mediumpurple;">{{this.objPriced.GiaTb | localNumber:'.0-0'}}</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lableName">Chi phí quản lý trực tiếp</td>
+                                <td colspan="2" style="background-color: #e9ecef;">
+                                    <input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCpquanLyTt== 1}" (keypress)="isNumberKey($event,'IdColorCpquanLyTt')" [(ngModel)]="objModel.CpquanLyTt" name="CPQuanLyTT" (ngModelChange)="reportDataResultExpectedProfit()" placeholder="0"
+                                        required maxlength="250" style="width: 15%; float: left; text-align: right;" class="form-control form-control-sm datachange">
+                                    <input type="text" value="%" disabled style="text-align: center; width: 15%; float: left; background-color: lightcyan;" class="form-control form-control-sm">
+                                    <a data-toggle="tooltip" data-placement="top" title="= %CPQL trực tiếp * (Giá bán - Giá vốn giao tới KH - CPQL gián tiếp - CP tài chính)">
+                                        <input type="text" disabled value="{{objModel.CpquanLyTtTotal | localNumber:'.0-0'}}" name="CpquanLyTtTotal" placeholder="0" style="text-align: right; width: 40%; float: left;" class="form-control form-control-sm">
+                                    </a>
+                                    <input type="text" value="VND/Kg" disabled style="text-align: right; width: 30%;" class="form-control form-control-sm">
+                                </td>
+                                <td class="lableName">Chi phí quản lý gián tiếp (VND/Kg)</td>
+                                <td colspan="2" style="background-color: lightcyan;">
+                                    <a data-toggle="tooltip" data-placement="top" title="= % CPQL gián tiếp * Giá bán">
+                                        <input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCpquanLyGtTotal== 1}" (keypress)="isNumberKey($event,'IdColorCpquanLyGtTotal')" [(ngModel)]="objModel.CpquanLyGtTotal" name="CpquanLyGtTotal" (ngModelChange)="reportDataResultExpectedProfit()"
+                                            placeholder="0" required maxlength="250" class="form-control form-control-sm datachange">
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lableName" style="width: 240px">Chi phí tài chính (công nợ) (VND/Kg)</td>
+                                <td style="background-color: #e9ecef; width: 120px;">
+                                    <a data-toggle="tooltip" data-placement="top" title="= (%Lãi suất * Hạn thanh toán/30) * Giá bán">
+                                        <input type="text" value="{{objModel.CptaiChinhTotal | localNumber:'.0-0'}}" disabled style="text-align: right;" placeholder="0" required maxlength="250" class="form-control form-control-sm">
+                                    </a>
+                                </td>
+                                <td class="lableName" style="width: 150px">Hạn thanh toán (Ngày)</td>
+                                <td style="background-color: #e9ecef;"><input type="text" disabled style="text-align: right;" value="{{objModel.HanThanhToan}}" name="HanThanhToan" placeholder="0" required maxlength="250" class="form-control form-control-sm"></td>
+                                <td class="lableName">Lãi suất nợ (%/30 Ngày)</td>
+                                <td style="background-color: lightcyan; width: 50px">
+                                    <input type="text" [ngClass]="{ 'valuechange': objModel.IdColorCptaiChinh== 1}" (keypress)="isNumberKey($event,'IdColorCptaiChinh')" [(ngModel)]="objModel.CptaiChinh" (ngModelChange)="reportDataResultExpectedProfit()" name="CPTaiChinh" placeholder="0"
+                                        required maxlength="250" class="form-control form-control-sm datachange">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="groupresult">
+                        <div class="row">
+                            <div class="col-md-12 lableName">
+                                Giá vốn tại kho (VND/Kg)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <a data-toggle="tooltip" data-placement="top" title="= Giá mua + Thuế NK + CL tỷ giá + CP về kho + CP thuê kho + CP bốc xếp">
+                                    <input type="text" value="{{objModel.GiaVonTaiKho | localNumber:'.0-0'}}" disabled maxlength="250" placeholder="0" class="form-control form-control-sm dataresult">
+                                </a>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="groupresult">
+                        <div class="row">
+                            <div class="col-md-12 lableName">
+                                Giá vốn giao đến khách hàng (VND/Kg)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <a data-toggle="tooltip" data-placement="top" title="= Giá vốn tại kho + Chi phí giao">
+                                    <input type="text" value="{{objModel.GiaVonGiaoToiKh | localNumber:'.0-0'}}" disabled maxlength="250" placeholder="0" class="form-control form-control-sm dataresult">
+                                </a>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="groupresult">
+                        <div class="row">
+                            <div class="col-md-12 lableName">
+                                Lợi nhuận dự kiến (net) (%)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <a data-toggle="tooltip" data-placement="top" title="= [Giá bán - (giá vốn giao tới KH + CP khác)] / Giá bán * 100">
+                                    <input type="text" (keypress)="isNumberKey($event)" [(ngModel)]="objModel.LoiNhuanDuKien" name="LoiNhuanDuKien" id="LoiNhuanDuKien" (ngModelChange)="reportSalePriceExpected()" maxlength="250" placeholder="0" class="form-control form-control-sm dataresult datachange">
+                                </a>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tblistdata">
+                        <table class="table table-bordered table-hover">
+                            <!-- Table head -->
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th class="col-code col-product">Mã hàng hóa</th>
+                                    <th class="col-name col-product">Tên hàng hóa</th>
+                                    <th class="col-product">Giá CIF</th>
+                                    <th class="col-product">Tỷ giá</th>
+                                    <th class="col-product">Thuế NK</th>
+                                    <th class="col-product">Phí về kho</th>
+                                    <th class="col-product">Phí bốc xếp</th>
+                                    <th class="col-product">Phí lưu kho</th>
+                                    <th class="col-product">TG lưu kho TB</th>
+                                    <th class="col-result">Giá vốn tại kho</th>
+                                    <th class="col-code col-customer">Mã khách hàng</th>
+                                    <th class="col-name col-customer">Tên khách hàng</th>
+                                    <th class="col-customer">Số lượng giao</th>
+                                    <th class="col-customer">Khu vực giao hàng</th>
+                                    <th class="col-customer">Chi phí giao</th>
+                                    <th class="col-result">Giá vốn giao tới KH</th>
+                                    <th class="col-result">Giá bán dự kiến</th>
+                                    <th class="col-customer">CP tài chính (công nợ)</th>
+                                    <th class="col-customer">CPQL trực tiếp</th>
+                                    <th class="col-customer">CPQL gián tiếp</th>
+                                    <th class="col-result">Lợi nhuận dự kiến(%)</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <!-- Table head -->
+                            <!-- Table body -->
+                            <tbody>
+                                <tr *ngIf="lstDataResult.length <= 0">
+                                    <td colspan="23" class="datarow-null">Dữ liệu không tồn tại</td>
+                                </tr>
+                                <tr *ngFor="let row of lstDataResult; let i = index" (click)="showDataRow(i)">
+                                    <td *ngIf="row.StoreId == 1" class="order-number" style="background-color: #3092c0;">{{i + 1}}</td>
+                                    <td *ngIf="row.StoreId == 2" class="order-number" style="background-color: tan;">{{i + 1}}</td>
+                                    <td style="text-align: center;">{{row.MaHh}}</td>
+                                    <td>{{row.TenHh}}</td>
+                                    <td *ngIf="row.LoaiTien == '' || row.LoaiTien == null || row.LoaiTien == undefined" [ngClass]="{ 'valuechange': row.IdColorGiaCif == 1}" style="width: 80px; text-align: right;">{{row.GiaCif}}</td>
+                                    <td *ngIf="row.LoaiTien != '' && row.LoaiTien != null && row.LoaiTien != undefined" [ngClass]="{ 'valuechange': row.IdColorGiaCif == 1}" style="width: 80px; text-align: right;">{{row.GiaCif}}-{{row.LoaiTien}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorTyGia == 1}" style="text-align: right;">{{row.TyGia}}</td>
+                                    <td style="text-align: right;">{{row.ThueNk == null || row.ThueNk == undefined ? 0 : row.ThueNk}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCpveKho == 1}" style="text-align: right;">{{row.CpveKho == null || row.CpveKho == undefined ? 0 : row.CpveKho}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCpbocXep == 1}" style="text-align: right;">{{row.CpbocXep}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCpluuKho == 1}" style="text-align: right;">{{row.CpluuKho}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorTgluuKhoTb == 1}" style="text-align: right;">{{row.TgluuKhoTb == null ? 0 : row.TgluuKhoTb}}</td>
+                                    <td style="text-align: right;">{{row.GiaVonTaiKho | localNumber:'.0-0'}}</td>
+                                    <td style="text-align: center;">{{row.MaKh}}</td>
+                                    <td>{{row.TenKh}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorSoLuong == 1}" style="text-align: right;">{{row.SoLuong}}</td>
+                                    <td style="width: 150px;">{{row.KhuVucGh}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCpgiao == 1}" style="text-align: right;">{{row.Cpgiao}}</td>
+                                    <td style="text-align: right;">{{row.GiaVonGiaoToiKh | localNumber:'.0-0'}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorGiaBanDuKien == 1}" style="text-align: right;">{{row.GiaBanDuKien | localNumber:'.0-0'}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCptaiChinh == 1}" style="text-align: right;">{{row.CptaiChinhTotal | localNumber:'.0-0'}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCpquanLyTt == 1}" style="text-align: right;">{{row.CpquanLyTtTotal | localNumber:'.0-0'}}</td>
+                                    <td [ngClass]="{ 'valuechange': row.IdColorCpquanLyGtTotal == 1}" style="text-align: right;">{{row.CpquanLyGtTotal | localNumber:'.0-0'}}</td>
+                                    <td style="text-align: right;">{{row.LoiNhuanDuKien | localNumber:'.2-2'}}</td>
+                                    <td style="width: 70px; text-align: center;">
+                                        <a (click)="duplicateRowGird(i)" data-toggle="modal" data-target="#MyModal"><img [src]=duplicateIcon></a>&nbsp;&nbsp;&nbsp;
+                                        <a (click)="openDialog(row.Id)"><img [src]=deleteIcon></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>

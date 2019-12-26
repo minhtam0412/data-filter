@@ -1,0 +1,86 @@
+<form #form="ngForm" novalidate>
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">{{isAddState ? 'Thêm mới' : 'Chỉnh sửa'}}</h4>
+      <button type="button" class="close" data-dismiss="modal" (click)="closeDialog()">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <div class="form_content_v2">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Mã khu vực</label> <label
+                class="control-label-require">*</label></div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Tên khu vực</label> <label
+                class="control-label-require">*</label></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <input type="text" #MaKhuVuc='ngModel' [disabled]="!isAddState" [(ngModel)]="model.MaKhuVuc" name="MaKhuVuc" required
+                       maxlength="3" [ngClass]="{ 'is-invalid': MaKhuVuc.touched  && MaKhuVuc.invalid }"
+                       class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <div class="col-sm-12">
+                <input type="text" #TenKhuVuc='ngModel' [(ngModel)]="model.TenKhuVuc" name="TenKhuVuc" required
+                       maxlength="400" [ngClass]="{ 'is-invalid': TenKhuVuc.touched  && TenKhuVuc.invalid }"
+                       class="form-control form-control-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Ghi chú</label> <label
+                class="control-label-require"></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group">
+                             <textarea type="text" style="border-bottom: 1px solid #ced4da; height: auto"
+                                       class="form-control form-control-sm"
+                                       rows="3" [(ngModel)]="model.GhiChu"
+                                       name="GhiChu"
+                                       [ngClass]="{'is-invalid' : model.GhiChu!= undefined && model.GhiChu.length > 400}"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" name="btnSave" *appCheckpermission="['SAVE']"
+              [disabled]="form.invalid || (model.GhiChu != undefined && model.GhiChu.length > 400)"
+              class="btn btn-info btn-sm"
+              (click)="saveData(false)">
+        <i class="far fa-save"></i> Lưu
+      </button>
+      <button type="button" name="btnSaveContinue"
+              [disabled]="form.invalid || (model.GhiChu != undefined && model.GhiChu.length > 400)"
+              class="btn btn-info btn-sm"
+              (click)="saveData(true)" *appCheckpermission="['SAVE','ADD']">
+        <i class="far fa-save"></i> Lưu & Thêm mới
+      </button>&nbsp;
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDialog()">Đóng
+      </button>
+    </div>
+  </div>
+</form>

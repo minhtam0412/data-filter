@@ -1,0 +1,376 @@
+<div class="header_content_v2">
+    <section class="form_content_v2">
+        <form>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Danh mục</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Danh sách khách hàng</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-left">
+                    <p class="text-uppercase" style="font-size:18px;color: #587792; font-weight:bold; font-family: 'Lato', sans-serif;"><span>Danh sách khách hàng</span>
+                    </p>
+                </div>
+                <div class="col-sm-8 text-right">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success btn-sm" (click)="SerachAction()">
+              <i class="fab fa-searchengin"></i> Tìm kiếm
+            </button>&nbsp;
+                        <button type="button" class="btn btn-primary btn-sm" (click)="AddModel()" data-toggle="modal" data-target="#MyModal">
+              <i class="fas fa-plus-circle"></i> Thêm mới
+            </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <label class="col-sm-12 control-label">Tìm kiếm</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group mb-3 ">
+                                <input type="text" [(ngModel)]="dataSerach" (change)="SerachAction()" name="dataSerach" class="form-control form-control-sm" placeholder="Mã, Tên khách hàng, Tên đầy đủ khách hàng">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <label class="col-sm-12 control-label">Khu vực</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group mb-3 ">
+                                <ng-select [(ngModel)]="cboAreaList" name="cboCustomerType" class="select-custom select-full-border" (clear)="clearustomerType()">
+                                    <ng-option [value]="-1">--Tất cả--</ng-option>
+                                    <ng-option *ngFor="let item of lstAreaList" [value]="item.Id">{{item.TenKhuVuc}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</div>
+<div class="main_content_v2">
+    <section class="form_content_v2">
+        <div class="table-responsive_v2">
+            <!-- Table  -->
+            <table class="table table-bordered table-striped table-hover">
+                <!-- Table head -->
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Mã khách hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Tên khách hàng đầy đủ</th>
+                        <th>Địa chỉ</th>
+                        <th>Địa chỉ giao hàng</th>
+                        <th>Mã khu vực</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <!-- Table head -->
+                <!-- Table body -->
+                <tbody>
+                    <tr *ngIf="lstDataResult.length <= 0">
+                        <td colspan="9" class="datarow-null">Dữ liệu không tồn tại</td>
+                    </tr>
+                    <tr *ngFor="let row of lstDataResult; let i = index">
+                        <td class="order-number">{{i + 1 + (pagingComponent.getLimit() * (page - 1))}}</td>
+                        <td class="col-code" style="min-width: 150px; max-width: 150px">
+                            <a (click)="EditModel(i)" data-toggle="modal" data-target="#MyModal" style='color:#337ab7;'>{{row.CustomerCode}}</a>
+                        </td>
+                        <td class="text-left" style="white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{row.NameCus}}</td>
+                        <td class="text-left" style="white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{row.FullnameCus }}</td>
+                        <td class="col-note" style="white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{row.Adress}}</td>
+                        <td class="col-note" style="white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">{{row.DeliveryAdr}}</td>
+                        <td class="col-name" style="min-width: 120px; max-width: 120px">{{row.MaKhuVuc}}</td>
+                        <td class="col-action">
+                            <a (click)="EditModel(i)" data-toggle="modal" data-target="#MyModal"><img [src]=editIcon></a>&nbsp;&nbsp;&nbsp;
+                            <a (click)="openDialog(row.CusId)"><img [src]=deleteIcon></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 10px;">
+            <app-pagination (goPage)="goToPage($event)" (changeLimit)="changeLimit()" (goNext)="onNext()" (goPrev)="onPrev()" [pagesToShow]="5" [page]="page" [perPage]="limit" [count]="total"></app-pagination>
+        </div>
+    </section>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="MyModal" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">THÔNG TIN KHÁCH HÀNG CHI TIẾT</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="CloseModel()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form_content_v2" id="formModel">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Mã khách hàng</label>
+                                    <label class="control-label-require">*</label></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Tên khách hàng</label>
+                                    <label class="control-label-require">*</label></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Tên khách hàng đầy đủ</label> <label class="control-label-require">*</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" #CustomerCode='ngModel' [(ngModel)]="objModel.CustomerCode" name="CustomerCode" (ngModelChange)="Uppercase($event)" required maxlength="250" placeholder="Mã khách hàng" [ngClass]="{ 'is-invalid': CustomerCode.touched  && CustomerCode.invalid }"
+                                        class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" #NameCus='ngModel' [(ngModel)]="objModel.NameCus" name="NameCus" id="NameCus" required maxlength="250" placeholder="Tên khách hàng" [ngClass]="{ 'is-invalid': NameCus.touched  && NameCus.invalid }" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" #FullnameCus='ngModel' [(ngModel)]="objModel.FullnameCus" name="FullnameCus" required maxlength="2000" placeholder="Tên khách hàng đầy đủ" [ngClass]="{ 'is-invalid': FullnameCus.touched  && FullnameCus.invalid }" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Địa chỉ công ty</label>
+                                    <label class="control-label-require"></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <textarea type="text" [(ngModel)]="objModel.Adress" name="Adress" rows="2" maxlength="2000" placeholder="Địa chỉ công ty đầy đủ" class="form-control form-control-sm"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Hạn thanh toán</label>
+                                    <label class="control-label-require"></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input type="text" #PaymentExpired='ngModel' [(ngModel)]="objModel.PaymentExpired" name="PaymentExpired" (keypress)="isNumberKey($event)" maxlength="4" placeholder="Hạn thanh toán" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': PaymentExpired.touched  && PaymentExpired.invalid }">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-10" style="vertical-align: middle">
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" [(ngModel)]="objModel.IsActive" id="IsActive" name="IsActive">
+                                <label class="custom-control-label" for="IsActive">Sử dụng</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <br>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#info">KHU VỰC</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#items">CHI TIẾT GIÁ</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div id="info" class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <!-- Table  -->
+                                            <table class="table table-bordered table-striped table-hover table-fixed" style="margin-bottom: 0;">
+                                                <!-- Table head -->
+                                                <thead>
+                                                    <tr style="background-color: #e3e3e3; color: #337ab7;">
+                                                        <th style="text-align: center; width: 38px;">#</th>
+                                                        <th style="text-align: center; width: 400px;">Địa chỉ giao hàng</th>
+                                                        <th style="text-align: center; width: 150px;">Mã khu vực</th>
+                                                        <th style="text-align: center;">Khu vực</th>
+                                                        <th style="text-align: center; width: 130px;">Chọn mặc định</th>
+                                                        <th style="text-align: center; width: 80px;">Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <!-- Table head -->
+                                                <!-- Table body -->
+                                                <tbody>
+                                                    <tr *ngIf="objModel.lstCustomerDeliveryAddress.length <= 0">
+                                                        <td colspan="6" class="datarow-null" style="font-style: italic;">Dữ liệu không tồn tại</td>
+                                                    </tr>
+                                                    <tr *ngFor="let row of objModel.lstCustomerDeliveryAddress; let i = index">
+                                                        <td style="text-align: center; width: 38px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">{{i + 1}}</td>
+                                                        <td style="text-align: left; width: 400px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="row.DeliveryAdr" name="row.DeliveryAdr" maxlength="2000" placeholder="Địa chỉ giao hàng" class="form-control form-control-sm">
+                                                        </td>
+                                                        <td style="text-align: center; width: 150px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                            <input type="text" [(ngModel)]="row.MaKhuVuc" class="form-control form-control-sm" (keydown)="onKeydown($event)" select-value-of="Id" ngui-auto-complete [source]="this.lstAreaList" [accept-user-input]="true" [list-formatter]="renderDataRowAutoComplete"
+                                                                placeholder="Mã/tên khu vực" display-property-name="MaKhuVuc" [dropdown-custom-class]="''" [dropdown-custom-width]="550" [max-Height]="250" (valueChanged)="autocompleteCallback($event, i)" [header-item-template]="autocompleteHeaderTemplate"
+                                                                no-match-found-text='Không có dữ liệu' min-chars="0" value-property-name="TaxCode" tab-to-select='true'>
+                                                        </td>
+                                                        <td style="text-align: left; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">{{row.TenKhuVuc }}</td>
+                                                        <td style="text-align: center; width: 130px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                            <div class="custom-control custom-checkbox mb-3">
+                                                                <input type="checkbox" class="custom-control-input" [(ngModel)]="row.IsDefault" id="{{i}}.IsDefault" name="{{i}}.IsDefault" (ngModelChange)="checkIsDefault(i)">
+                                                                <label class="custom-control-label" for="{{i}}.IsDefault"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td style="text-align: center; width: 80px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                            <a (click)="deleteRowAddress(i)"><img [src]=deleteIcon></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="6" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;" class="text-left">
+                                                            <a (click)="AddCustomerDeliveryAddress()" style="color:#337ab7; font-weight: bold; font-family: 'Lato', sans-serif;">
+                                                                <i class="fas fa-plus-circle"></i>Thêm khu vực
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="items" class="tab-pane" style="z-index: 0;">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div style="max-height: 350px; overflow: auto; z-index: 9980;">
+                                                <!-- Table  -->
+                                                <table class="table table-bordered table-striped table-hover table-fixed" style="margin-bottom: 0; z-index: 10;">
+                                                    <!-- Table head -->
+                                                    <thead>
+                                                        <tr style="background-color: #e3e3e3; color: #337ab7;">
+                                                            <th style="text-align: center; width: 38px; vertical-align: middle;">#</th>
+                                                            <th style="text-align: center; width: 120px; vertical-align: middle;">Mã hàng hóa</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Tên hàng hóa</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Loại giá thanh toán</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Giá thanh toán</th>
+                                                            <!-- <th style="text-align: center; width: 120px; vertical-align: middle;">Ngày bán</th> -->
+                                                            <th style="text-align: center; width: 120px; vertical-align: middle;">Hạn thanh toán (Ngày)</th>
+                                                            <th style="text-align: center; width: 80px; vertical-align: middle;">Thao tác</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- Table head -->
+                                                    <!-- Table body -->
+                                                    <tbody>
+                                                        <tr *ngIf="objModel.lstSales.length <= 0">
+                                                            <td colspan="9" class="datarow-null" style="font-style: italic;">Dữ liệu không tồn tại</td>
+                                                        </tr>
+                                                        <tr *ngFor="let row of objModel.lstSales; let i = index">
+                                                            <td style="text-align: center; width: 38px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">{{i + 1}}</td>
+                                                            <td style="text-align: center; width: 150px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                                <input type="text" [(ngModel)]="row.ProductCode" class="form-control form-control-sm" (keydown)="sales_onKeydown($event)" select-value-of="Id" ngui-auto-complete [source]="this.lstProductDetail" [accept-user-input]="true" [list-formatter]="sales_renderDataRowAutoComplete"
+                                                                    placeholder="Mã hàng hóa" display-property-name="ProductCode" [dropdown-custom-class]="''" [dropdown-custom-width]="550" [max-Height]="250" (valueChanged)="sales_autocompleteCallback($event, i)"
+                                                                    [header-item-template]="sales_autocompleteHeaderTemplate" no-match-found-text='Không có dữ liệu' min-chars="0" value-property-name="ProductCode" tab-to-select='true'>
+                                                            </td>
+                                                            <td style="text-align: left;  padding-bottom: 2px; padding-top: 2px; vertical-align: middle; min-height: 100px;">
+                                                                <input type="text" [(ngModel)]="row.ProductName" disabled placeholder="Tên hàng hóa" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td class="col-name" style="padding-bottom: 2px; padding-top: 2px; min-width: 120px; vertical-align: middle;">
+                                                                <div class="input-group">
+                                                                    <ng-select [(ngModel)]="row.PayType" name="PayType{{i}}" class="select-custom select-full-border" (clear)="clearLoaiThanhToan()">
+                                                                        <ng-option *ngFor="let item of ListPayType" [value]="item.PayTypeId">{{item.PayTypeName}}
+                                                                        </ng-option>
+                                                                    </ng-select>
+                                                                </div>
+                                                            </td>
+                                                            <td *ngIf="row.PayType == 1" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle; width: 250px;">
+                                                                <div class="row">
+                                                                    <div class="col-sm-7">
+                                                                        <input type="number" style="text-align: right;" [(ngModel)]="row.GiaNgoaiTe" name="row.GiaNgoaiTe" maxlength="250" placeholder="Giá ngoại tệ" class="form-control form-control-sm">
+                                                                    </div>
+                                                                    <div class="col-sm-5" style="padding: 0; padding-right: 15px;">
+                                                                        <div class="input-group">
+                                                                            <ng-select [(ngModel)]="row.LoaiNgoaiTe" name="LoaiNgoaiTe{{i}}" class="select-custom select-full-border" (clear)="clearLoaiTien()">
+                                                                                <ng-option *ngFor="let status of lstCurrencyType" [value]="status.CurrencyId">{{status.CurrencyName}}
+                                                                                </ng-option>
+                                                                            </ng-select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td *ngIf="row.PayType != 1" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                                <input type="number" style="text-align: right;" [(ngModel)]="row.GiaDong" name="row.GiaDong" maxlength="250" placeholder="Giá đồng" class="form-control form-control-sm">
+                                                            </td>
+                                                            <!-- <td class="col-name" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                            <input [(ngModel)]="row.ThoiGianBan" name="ThoiGianBan{{i}}" style="height: 31px; font-size: 14px;padding-bottom: 2px; padding-top: 2px; vertical-align: middle;" placeholder="Chọn ngày bán" type="text" class="form-control" bsDatepicker placement="top"
+                                                                (ngModelChange)="changeEffectiveDate($event, row)" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass:colorTheme, showWeekNumbers:false }">
+                                                        </td> -->
+                                                            <td style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                                <input type="number" style="text-align: right;" [(ngModel)]="row.HanTt" name="row.HanTt" maxlength="250" placeholder="Hạn thanh toán" class="form-control form-control-sm">
+                                                            </td>
+                                                            <td style="text-align: center; width: 80px; padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                                                                <a (click)="deleteRowSales(i)"><img [src]=deleteIcon></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="9" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;" class="text-left">
+                                                                <a (click)="AddSales()" style="color:#337ab7; font-weight: bold; font-family: 'Lato', sans-serif;">
+                                                                    <i class="fas fa-plus-circle"></i>Thêm hàng hóa bán
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer" [ngClass]="{'wrapper': !checkValidateForm()}">
+                <button type="button" [ngClass]="{'pointer-events-none': !checkValidateForm()}" class="btn btn-info btn-sm" (click)="saveDataModel(true)">
+          <i class="far fa-save"></i> Lưu
+        </button>&nbsp;
+                <button type="button" [ngClass]="{'pointer-events-none': !checkValidateForm()}" class="btn btn-info btn-sm" (click)="saveDataModel(false)">
+          <i class="far fa-save"></i> Lưu & Thêm mới
+        </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" #closeAddExpenseModal (click)="CloseModel()"><i class="far fa-window-close"></i> Đóng
+        </button>
+            </div>
+
+        </div>
+    </div>
+</div>

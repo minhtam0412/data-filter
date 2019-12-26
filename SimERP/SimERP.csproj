@@ -1,0 +1,242 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+        <IsPackable>false</IsPackable>
+        <SpaRoot>ClientApp\</SpaRoot>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+        <!-- Set this to true if you enable server-side prerendering -->
+        <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile>bin\Debug\netcoreapp2.1\netcoreapp2.1\SimERP.xml</DocumentationFile>
+        <OutputPath>bin\Debug\netcoreapp2.1\netcoreapp2.1\</OutputPath>
+        <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="9.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+        <PackageReference Include="FastMember" Version="1.5.0" />
+        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.Cryptography.Internal" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.2.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="4.0.1" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+        <PackageReference Include="System.Data.Odbc" Version="4.6.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Don't publish the SPA source files, but do show them in the project files list -->
+        <Compile Remove="ClientApp\.idea\**" />
+        <Compile Remove="ClientApp\.vscode\**" />
+        <Compile Remove="ClientApp\dist\**" />
+        <Compile Remove="ClientApp\e2e\**" />
+        <Compile Remove="ClientApp\src\app\common\pagination\**" />
+        <Compile Remove="ClientApp\src\app\counter\**" />
+        <Compile Remove="ClientApp\src\app\fetch-data\**" />
+        <Compile Remove="ClientApp\src\app\lists\customertypecomponent\**" />
+        <Compile Remove="ClientApp\src\app\lists\customer\**" />
+        <Compile Remove="ClientApp\src\app\lists\productcategory\**" />
+        <Compile Remove="ClientApp\src\app\lists\stockcomponent\**" />
+        <Compile Remove="ClientApp\src\app\lists\stock\**" />
+        <Compile Remove="ClientApp\src\app\vouchers\**" />
+        <Compile Remove="Upload\Customer\**" />
+        <Compile Remove="wwwroot\assets\**" />
+        <Content Remove="$(SpaRoot)**" />
+        <Content Remove="ClientApp\.idea\**" />
+        <Content Remove="ClientApp\.vscode\**" />
+        <Content Remove="ClientApp\dist\**" />
+        <Content Remove="ClientApp\e2e\**" />
+        <Content Remove="ClientApp\src\app\common\pagination\**" />
+        <Content Remove="ClientApp\src\app\counter\**" />
+        <Content Remove="ClientApp\src\app\fetch-data\**" />
+        <Content Remove="ClientApp\src\app\lists\customertypecomponent\**" />
+        <Content Remove="ClientApp\src\app\lists\customer\**" />
+        <Content Remove="ClientApp\src\app\lists\productcategory\**" />
+        <Content Remove="ClientApp\src\app\lists\stockcomponent\**" />
+        <Content Remove="ClientApp\src\app\lists\stock\**" />
+        <Content Remove="ClientApp\src\app\vouchers\**" />
+        <Content Remove="Upload\Customer\**" />
+        <Content Remove="wwwroot\assets\**" />
+        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Remove="ClientApp\.idea\**" />
+        <EmbeddedResource Remove="ClientApp\.vscode\**" />
+        <EmbeddedResource Remove="ClientApp\dist\**" />
+        <EmbeddedResource Remove="ClientApp\e2e\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\common\pagination\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\counter\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\fetch-data\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\lists\customertypecomponent\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\lists\customer\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\lists\productcategory\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\lists\stockcomponent\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\lists\stock\**" />
+        <EmbeddedResource Remove="ClientApp\src\app\vouchers\**" />
+        <EmbeddedResource Remove="Upload\Customer\**" />
+        <EmbeddedResource Remove="wwwroot\assets\**" />
+        <None Remove="ClientApp\.idea\**" />
+        <None Remove="ClientApp\.vscode\**" />
+        <None Remove="ClientApp\dist\**" />
+        <None Remove="ClientApp\e2e\**" />
+        <None Remove="ClientApp\src\app\common\pagination\**" />
+        <None Remove="ClientApp\src\app\counter\**" />
+        <None Remove="ClientApp\src\app\fetch-data\**" />
+        <None Remove="ClientApp\src\app\lists\customertypecomponent\**" />
+        <None Remove="ClientApp\src\app\lists\customer\**" />
+        <None Remove="ClientApp\src\app\lists\productcategory\**" />
+        <None Remove="ClientApp\src\app\lists\stockcomponent\**" />
+        <None Remove="ClientApp\src\app\lists\stock\**" />
+        <None Remove="ClientApp\src\app\vouchers\**" />
+        <None Remove="Upload\Customer\**" />
+        <None Remove="wwwroot\assets\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Remove="Utils\Helpers.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Remove=".gitignore" />
+        <None Remove="ClientApp\.angular-cli.json" />
+        <None Remove="ClientApp\.editorconfig" />
+        <None Remove="ClientApp\.editorconfig" />
+        <None Remove="ClientApp\.gitignore" />
+        <None Remove="ClientApp\.gitignore" />
+        <None Remove="ClientApp\karma.conf.js" />
+        <None Remove="ClientApp\karma.conf.js" />
+        <None Remove="ClientApp\package-lock.json" />
+        <None Remove="ClientApp\protractor.conf.js" />
+        <None Remove="ClientApp\protractor.conf.js" />
+        <None Remove="ClientApp\README.md" />
+        <None Remove="ClientApp\README.md" />
+        <None Remove="ClientApp\src\app\common\commomodel\ReqListAdd.ts" />
+        <None Remove="ClientApp\src\app\common\commomodel\ReqListDelete.ts" />
+        <None Remove="ClientApp\src\app\common\commomodel\ReqListSearch.ts" />
+        <None Remove="ClientApp\src\app\common\commomodel\ReqListUpdateSortOrder.ts" />
+        <None Remove="ClientApp\src\app\lists\pagelist\model\Function.ts" />
+        <None Remove="ClientApp\src\app\lists\pagelist\model\Module.ts" />
+        <None Remove="ClientApp\src\app\lists\pagelist\model\pagelist.ts" />
+        <None Remove="ClientApp\src\app\lists\rolelist\model\rolelist.ts" />
+        <None Remove="ClientApp\tslint.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="ClientApp\src\app\calculator\pricecalculator\model\" />
+        <Folder Include="ClientApp\src\app\calculator\pricecalculator\pricecalculator\" />
+        <Folder Include="ClientApp\src\app\common\exportAsExcel\" />
+        <Folder Include="ClientApp\src\app\common\loading\" />
+        <Folder Include="ClientApp\src\app\common\locale\lib-locale\" />
+        <Folder Include="ClientApp\src\app\common\locale\pipes\" />
+        <Folder Include="ClientApp\src\app\header\" />
+        <Folder Include="ClientApp\src\app\lists\area\arealist\" />
+        <Folder Include="ClientApp\src\app\lists\customerdetail\customerdetail\" />
+        <Folder Include="ClientApp\src\app\lists\customerdetail\model\" />
+        <Folder Include="ClientApp\src\app\lists\product\model\" />
+        <Folder Include="ClientApp\src\app\lists\product\productdetail\" />
+        <Folder Include="ClientApp\src\app\lists\product\productlist\" />
+        <Folder Include="ClientApp\src\app\lists\shippedprice\model\" />
+        <Folder Include="ClientApp\src\app\lists\shippedprice\shippedprice\" />
+        <Folder Include="ClientApp\src\app\lists\store\model\" />
+        <Folder Include="ClientApp\src\app\pagination\" />
+        <Folder Include="ClientApp\src\app\reports\" />
+        <Folder Include="ClientApp\src\app\systems\changepassword\" />
+        <Folder Include="ClientApp\src\app\systems\firstchangepassword\" />
+        <Folder Include="ClientApp\src\assets\css\" />
+        <Folder Include="ClientApp\src\assets\font\poppins\" />
+        <Folder Include="ClientApp\src\assets\images\avatars\" />
+        <Folder Include="ClientApp\src\assets\images\logo\" />
+        <Folder Include="ClientApp\src\assets\js\" />
+        <Folder Include="Upload\VendorProduct\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\SimERP.Business\SimERP.Business.csproj" />
+        <ProjectReference Include="..\SimERP.Data\SimERP.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <TypeScriptCompile Include="ClientApp\src\app\common\commomodel\ReqListAdd.ts" />
+        <TypeScriptCompile Include="ClientApp\src\app\common\commomodel\ReqListDelete.ts" />
+        <TypeScriptCompile Include="ClientApp\src\app\common\commomodel\ReqListSearch.ts" />
+        <TypeScriptCompile Include="ClientApp\src\app\common\commomodel\ReqListUpdateSortOrder.ts" />
+        <TypeScriptCompile Include="ClientApp\src\app\lists\pagelist\model\Function.ts">
+          <SubType>Code</SubType>
+        </TypeScriptCompile>
+        <TypeScriptCompile Include="ClientApp\src\app\lists\pagelist\model\Module.ts">
+          <SubType>Code</SubType>
+        </TypeScriptCompile>
+        <TypeScriptCompile Include="ClientApp\src\app\lists\pagelist\model\Pagelist.ts" />
+        <TypeScriptCompile Include="ClientApp\src\app\lists\rolelist\model\rolelist.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="ClientApp\src\app\lists\pagelist\model\Function.js">
+        <DependentUpon>Function.ts</DependentUpon>
+      </None>
+    </ItemGroup>
+
+    <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+        <!-- Ensure Node.js is installed -->
+        <Exec Command="node --version" ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+        </Exec>
+        <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+        <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    </Target>
+
+    <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+        <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+        <!-- Include the newly-built files in the publish output -->
+        <ItemGroup>
+            <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+            <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+            <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+                <RelativePath>%(DistFiles.Identity)</RelativePath>
+                <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            </ResolvedFileToPublish>
+        </ItemGroup>
+    </Target>
+
+</Project>

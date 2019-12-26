@@ -1,0 +1,23 @@
+.tab-content {
+    border: 0.5px solid #ddd;
+}
+
+.tab-content .lbadd a {
+    font-weight: bold;
+    cursor: pointer;
+    color: #337ab7;
+    text-decoration: none;
+}
+
+.nav-tabs .nav-link {
+    background-color: #dbdbdb;
+    padding: 3px 6px;
+    border-radius: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #4cae4c;
+    color: #fff;
+    border: 1px solid #4cae4c;
+}

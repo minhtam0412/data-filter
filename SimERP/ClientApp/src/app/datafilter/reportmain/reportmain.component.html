@@ -1,0 +1,126 @@
+<div class="header_content_v2">
+  <section class="form_content_v2">
+    <form>
+      <div class="row">
+        <div class="col-md-12">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="#" [routerLink]="'/'">Báo cáo</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Báo cáo nhập khẩu</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row col-md-12">
+            <div class="col-md-9 col-sm-8">
+              <div class="input-group mb-3">
+                <input type="text" [(ngModel)]="searchString" name="dataSerach" class="form-control form-control-sm"
+                       placeholder="Nhập Tên hàng, Doanh nghiệp XNK, Xuất xứ, Đơn vị đối tác"
+                       (keydown.enter)="searchProduct()">
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-4">
+              <button type="button" class="btn btn-success btn-sm" (click)="searchProduct()">
+                <i class="fab fa-searchengin"></i> Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row col-md-12">
+            <button type="button" class="btn btn-success btn-sm" (click)="confirmOverWrite()">
+              Overwrite
+            </button>&nbsp;
+            <button type="button" class="btn btn-success btn-sm" (click)="merge()">
+              Merge
+            </button>&nbsp;
+            <button type="button" class="btn btn-success btn-sm" [disabled]="lstDataResult.length == 0"
+                    (click)="quantityTranform()">
+              STANDARDIZE QUANTITY
+            </button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-success btn-sm" [disabled]="lstDataResult.length == 0"
+                    (click)="unitPriceTranform()">
+              STANDARDIZE UNIT PRICE (USD)
+            </button>&nbsp;
+            <button type="button" class="btn btn-success btn-sm" [disabled]="lstDataResult.length == 0"
+                    (click)="previewResult()">
+              Preview Result
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row col-md-12">
+            <div class="col-sm-1">
+              <div class="input-group mb-3 ">
+                <label>Column:</label>
+              </div>
+            </div>
+            <div class="col-md-10">
+              <ng-multiselect-dropdown
+                [placeholder]="'Chọn cột cần hiển thị'"
+                [data]="dropdownListOriginal"
+                [(ngModel)]="selectedItems" name="selectedItems"
+                [settings]="dropdownSettings" (ngModelChange)="onChanged()">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-2">
+                    Filter:
+                  </div>
+                  <div class="col-md-10">
+                    <div class="input-group mb-3">
+                      <input type="text" [(ngModel)]="filterString" name="dataSerach"
+                             class="form-control form-control-sm"
+                             placeholder="Nhập Tên hàng, Doanh nghiệp XNK, Xuất xứ, Đơn vị đối tác"
+                             (keydown.enter)="previewFilter()">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button type="button" class="btn btn-success btn-sm" (click)="previewFilter()">
+                      Preview
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-success btn-sm" (click)="selectFilter()">
+                      Select
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-success btn-sm" (click)="deleteFilter()">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
+<div class="main_content_v2">
+  <section class="form_content_v2">
+    <div class="table-responsive_v2">
+      <angular-slickgrid gridId="grid2"
+                         gridHeight="380"
+                         [columnDefinitions]="columnDefinitions2"
+                         [gridOptions]="gridOptions2"
+                         [dataset]="dataset2"
+                         (onAngularGridCreated)="angularGridReady2($event)"
+                         (sgOnSelectedRowsChanged)="handleSelectedRowsChanged2($event.detail.eventData, $event.detail.args)">
+      </angular-slickgrid>
+    </div>
+    <div class="col-md-12" style="text-align: right">
+      <label style="font-weight: bold">Số lượng sản phẩm: {{this.lstDataSearch.length}}</label>
+    </div>
+  </section>
+</div>

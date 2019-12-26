@@ -1,0 +1,115 @@
+.tableinfo {}
+
+.tableinfo a {
+    font-family: 'Lato', sans-serif;
+}
+
+.tableinfo table td {
+    padding: 0px;
+    vertical-align: middle;
+}
+
+.tableinfo input {
+    border-radius: 0px;
+    font-weight: 400;
+    border: none;
+}
+
+.tableinfo .lableName {
+    padding-left: 5px !important;
+    vertical-align: middle;
+    font-weight: 600;
+}
+
+.tableinfo .datachange {
+    background-color: lightcyan;
+    text-align: right;
+}
+
+.tableinfo .codedatachange {
+    border: 1px solid #3092c0;
+    text-align: left;
+}
+
+.tableinfo .valuechange {
+    color: red;
+}
+
+.groupresult {
+    text-align: center;
+    font-weight: 500;
+}
+
+.groupresult a {
+    font-family: 'Lato', sans-serif;
+}
+
+.groupresult input {
+    font-weight: 500;
+}
+
+.groupresult .lableName {
+    padding-bottom: 5px !important;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.groupresult .dataresult {
+    border-color: #3092c0;
+    text-align: center;
+    color: blue;
+}
+
+
+/*-------------*/
+
+.tblistdata {}
+
+.tblistdata table th {
+    padding: 4px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.tblistdata .col-code {
+    width: 80px;
+}
+
+.tblistdata .col-name {
+    width: 120px;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tblistdata .col-result {
+    background-color: mediumpurple;
+}
+
+.tblistdata .col-product {
+    background-color: darkseagreen;
+}
+
+.tblistdata .col-customer {
+    background-color: tan;
+}
+
+.tblistdata table td {
+    padding: 2px;
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.tblistdata .valuechange {
+    color: red;
+}
+
+.datarow_north {
+    background-color: tan;
+}
+
+.datarow_south {
+    background-color: #3092c0;
+}

@@ -1,0 +1,181 @@
+<form #form="ngForm" novalidate>
+    <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">STANDARDIZE QUANTITY</h4>
+            <button type="button" class="close" data-dismiss="modal" (click)="closeDialog()">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body" style="padding: 0px;">
+            <div class="form_content_v2">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <br>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#info">Quy chuẩn thông thường</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#items">Quy chuẩn đặc biệt</a>
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div id="info" class="tab-pane active">
+                                <div class="row">
+                                    <div class="form_content_v2">
+                                        <div class="card" style="width: 40%; border-radius: 0px;">
+                                            <!-- <div class="card-header" style="background-color: #e3e3e3;">Chuẩn quy đổi</div> -->
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-3" style="text-align: right; margin-top: 5px;">Tấn = </div>
+                                                    <div class="col-md-7">
+                                                        <input type="text" disabled style="text-align: right;" name="quychuankg" [(ngModel)]="quychuankg" class="form-control form-control-sm" placeholder="Quy chuẩn khối lượng Kg">
+                                                    </div>
+                                                    <div class="col-md-2" style="text-align: left; margin-top: 5px;">Kg</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="text-align: right; margin-top: 10px;">
+                                                        <button type="button" class="btn btn-success btn-sm" (click)="quantitytranform()"> 
+                                                    <i class="fas fa-exchange-alt"></i> Quy đổi
+                                                  </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="table-responsive_v2">
+                                            <!-- Table  -->
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <!-- Table head -->
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Tên hàng</th>
+                                                        <th>Đơn vị tính</th>
+                                                        <th style="min-width: 150px;">Số lượng ban đầu</th>
+                                                        <th style="min-width: 150px;">Số lương quy đổi (Kg)</th>
+                                                    </tr>
+                                                </thead>
+                                                <!-- Table head -->
+                                                <!-- Table body -->
+                                                <tbody>
+                                                    <tr *ngIf="lstDataResult?.length <= 0">
+                                                        <td colspan="5" class="datarow-null">Dữ liệu không tồn tại</td>
+                                                    </tr>
+                                                    <tr *ngFor="let row of lstDataResult; let index = index">
+                                                        <td class="order-number">{{index + 1}} </td>
+                                                        <td class="col-name">{{row.ChungLoaiHangHoaXuatNhap}}</td>
+                                                        <td class="col-name">{{row.Dvt}}</td>
+                                                        <td style="text-align: right;">{{row.Luong}}</td>
+                                                        <td style="text-align: right;">{{row.SoLuongQuyDoi}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-12" style="text-align: right">
+                                            <label style="font-weight: bold">Số lượng sản phẩm: {{this.lstDataResult.length}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="items" class="tab-pane" style="z-index: 0;">
+                                <div class="row">
+                                    <div class="form_content_v2">
+                                        <div class="card" style="width: 80%; border-radius: 0px;">
+                                            <!-- <div class="card-header" style="background-color: #e3e3e3;">Chuẩn quy đổi</div> -->
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-3" style="text-align: right; margin-top: 5px;">Đơn vị tính </div>
+                                                            <div class="col-md-9">
+                                                                <input type="text" name="txtDvt" [(ngModel)]="txtDvt" (change)="PreviewData()" class="form-control form-control-sm" placeholder="Lọc đơn vị tính">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-3" style="text-align: right; margin-top: 5px;">Quy đổi</div>
+                                                            <div class="col-md-7">
+                                                                <input type="number" style="text-align: right;" name="txtQuydoi" [(ngModel)]="txtQuydoi" class="form-control form-control-sm" placeholder="Khối lượng quy đổi">
+                                                            </div>
+                                                            <div class="col-md-2" style="text-align: left; margin-top: 5px;">Kg</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-3" style="text-align: right; margin-top: 5px;">Keyword</div>
+                                                            <div class="col-md-9">
+                                                                <input type="text" name="txtKeyword" [(ngModel)]="txtKeyword" (change)="PreviewData()" class="form-control form-control-sm" placeholder="Tìm kiếm khối lượng">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12" style="text-align: right; margin-top: 10px;">
+                                                                <button type="button" class="btn btn-success btn-sm" (click)="PreviewData()"> 
+                                                                    <i class="fab fa-searchengin"></i> Preview
+                                                                </button> &nbsp;
+                                                                <button type="button" class="btn btn-success btn-sm" (click)="quantitytranforother()"> 
+                                                                    <i class="fas fa-exchange-alt"></i> Quy đổi
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="table-responsive_v2">
+                                            <!-- Table  -->
+                                            <table class="table table-bordered table-striped table-hover">
+                                                <!-- Table head -->
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Tên hàng</th>
+                                                        <th>Đơn vị tính</th>
+                                                        <th style="min-width: 150px;">Số lượng ban đầu</th>
+                                                        <th style="min-width: 150px;">Số lương quy đổi (Kg)</th>
+                                                    </tr>
+                                                </thead>
+                                                <!-- Table head -->
+                                                <!-- Table body -->
+                                                <tbody>
+                                                    <tr *ngIf="lstDataFilter?.length <= 0">
+                                                        <td colspan="5" class="datarow-null">Dữ liệu không tồn tại</td>
+                                                    </tr>
+                                                    <tr *ngFor="let row of lstDataFilter; let index = index">
+                                                        <td class="order-number">{{index + 1}} </td>
+                                                        <td class="col-name">{{row.ChungLoaiHangHoaXuatNhap}}</td>
+                                                        <td class="col-name">{{row.Dvt}}</td>
+                                                        <td style="text-align: right;">{{row.Luong}}</td>
+                                                        <td style="text-align: right;">{{row.SoLuongQuyDoi}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-12" style="text-align: right">
+                                            <label style="font-weight: bold">Số lượng sản phẩm: {{this.lstDataFilter.length}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDialog()">Đóng</button>
+        </div>
+    </div>
+</form>

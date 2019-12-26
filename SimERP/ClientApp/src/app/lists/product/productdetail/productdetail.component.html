@@ -1,0 +1,379 @@
+<form #form="ngForm" novalidate>
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">{{isAddState ? 'Thêm mới' : 'Chỉnh sửa'}}</h4>
+      <button type="button" class="close" data-dismiss="modal" (click)="closeDialog()">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <div class="form_content_v2">
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Mã sản phẩm</label>
+                    <label
+                      class="control-label-require">*</label></div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Mã nhập khẩu</label>
+                    <label
+                      class="control-label-require">*</label></div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Chi phí về kho Bắc Ninh
+                    (VND)</label> <label
+                    class="control-label-require"></label></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" #ProductCode='ngModel' [disabled]="!isAddState" [(ngModel)]="model.ProductCode"
+                           name="ProductCode" required (ngModelChange)="uppercase($event)"
+                           maxlength="8" [ngClass]="{ 'is-invalid': ProductCode.touched  && ProductCode.invalid }"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" (keypress)="isNumberKey($event)" #ImportCode='ngModel'
+                           [(ngModel)]="model.ImportCode" name="ImportCode" required maxlength="20"
+                           [ngClass]="{ 'is-invalid': ImportCode.touched  && ImportCode.invalid }"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" (keypress)="isNumberKey($event)" #CpveKhoBn='ngModel'
+                           [(ngModel)]="model.CpveKhoBn" id="CpveKhoBn" style="text-align: right" name="CpveKhoBn"
+                           maxlength="20" [ngClass]="{ 'is-invalid': CpveKhoBn.touched  && CpveKhoBn.invalid }"
+                           class="form-control form-control-sm" (blur)="formatNumber()">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Tên sản phẩm</label>
+                    <label
+                      class="control-label-require">*</label></div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Thuế nhập khẩu
+                    (%)</label>
+                    <label
+                      class="control-label-require">*</label></div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Chi phí về kho Long Hậu
+                    (VND)</label> <label
+                    class="control-label-require"></label></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" #ProductName='ngModel' [(ngModel)]="model.ProductName" name="ProductName"
+                           required maxlength="255" class="form-control form-control-sm"
+                           [ngClass]="{ 'is-invalid': ProductName.touched  && ProductName.invalid }">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" (keypress)="isNumberKey($event)" #ImportTax='ngModel'
+                           [(ngModel)]="model.ImportTax" style="text-align: right" name="ImportTax" required
+                           maxlength="5" [ngClass]="{ 'is-invalid': ImportTax.touched  && ImportTax.invalid }"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" #CpveKhoLh='ngModel' (keypress)="isNumberKey($event)"
+                           [(ngModel)]="model.CpveKhoLh" style="text-align: right" id="CpveKhoLh" name="CpveKhoLh"
+                           maxlength="20" [ngClass]="{ 'is-invalid': CpveKhoLh.touched  && CpveKhoLh.invalid }"
+                           class="form-control form-control-sm" (blur)="formatNumber()">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Tên sản phẩm đầy
+                    đủ</label>
+                    <label
+                      class="control-label-require"></label></div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Tồn kho (ngày)</label>
+                    <label
+                      class="control-label-require"></label></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" #ProductNamePlan='ngModel' [(ngModel)]="model.ProductNamePlan"
+                           name="ProductNamePlan" maxlength="255" class="form-control form-control-sm"
+                           [ngClass]="{ 'is-invalid': ProductNamePlan.touched  && ProductNamePlan.invalid }">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <input type="text" (keypress)="isNumberKey($event)" #TgTonKhoTB='ngModel'
+                           [(ngModel)]="model.TgTonKhoTb" name="TgTonKhoTB" style="text-align: right" maxlength="5"
+                           [ngClass]="{ 'is-invalid': TgTonKhoTB.touched  && TgTonKhoTB.invalid }"
+                           class="form-control form-control-sm">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div>
+              <table class="table table-bordered table-striped table-hover">
+                <!-- Table head -->
+                <thead>
+                <tr style="background-color: #e3e3e3; color: #337ab7; text-align: center">
+                  <th>Giá</th>
+                  <th>Khách hàng</th>
+                  <th style="max-width: 80px;min-width: 80px">Giá bán (VND/kg)</th>
+                </tr>
+                </thead>
+                <!-- Table head -->
+                <!-- Table body -->
+                <tbody>
+                <tr>
+                  <td style="font-weight: bold;vertical-align: middle;color: #555">Min</td>
+                  <td style="max-width: 80px;min-width: 80px">
+                    <input type="text" [(ngModel)]="model.KhMinName" name="KhMinName"
+                           class="form-control form-control-sm"
+                           select-value-of="CusId" ngui-auto-complete [source]="this.lstCustomer"
+                           [accept-user-input]="true" [list-formatter]="customerRenderDataRowAutoComplete"
+                           placeholder="-- Chọn --" display-property-name="CustomerCode"
+                           [dropdown-custom-class]="''" [dropdown-custom-width]="500" [max-Height]="300"
+                           (valueChanged)="customerMinAutocompleteCallback($event)"
+                           [header-item-template]="customerAutocompleteHeaderTemplate"
+                           no-match-found-text='Không có dữ liệu' min-chars="0" (blur)="customerMinOnBlur()"
+                           tab-to-select='true' max-num-list="15">
+                  </td>
+                  <td style="max-width: 80px;min-width: 80px">
+                    <input type="text" (keypress)="isNumberKey($event)" #GiaMin='ngModel' [(ngModel)]="model.GiaMin"
+                           name="GiaMin" style="text-align: right" maxlength="10" id="GiaMin" (blur)="formatNumber()"
+                           [ngClass]="{ 'is-invalid': GiaMin.touched  && GiaMin.invalid }"
+                           class="form-control form-control-sm">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold;vertical-align: middle;color: #555">Max</td>
+                  <td style="max-width: 80px;min-width: 80px">
+                    <input type="text" [(ngModel)]="model.KhMaxName" name="KhMaxName"
+                           class="form-control form-control-sm"
+                           select-value-of="CusId" ngui-auto-complete [source]="this.lstCustomer"
+                           [accept-user-input]="true" [list-formatter]="customerRenderDataRowAutoComplete"
+                           placeholder="-- Chọn --" display-property-name="CustomerCode"
+                           [dropdown-custom-class]="''" [dropdown-custom-width]="500" [max-Height]="300"
+                           (valueChanged)="customerMaxAutocompleteCallback($event)"
+                           [header-item-template]="customerAutocompleteHeaderTemplate"
+                           no-match-found-text='Không có dữ liệu' min-chars="0" (blur)="customerMaxOnBlur()"
+                           tab-to-select='true' max-num-list="15">
+                  </td>
+                  <td style="max-width: 80px;min-width: 80px">
+                    <input type="text" (keypress)="isNumberKey($event)" #GiaMax='ngModel' [(ngModel)]="model.GiaMax"
+                           name="GiaMax" style="text-align: right" maxlength="10" id="GiaMax" (blur)="formatNumber()"
+                           [ngClass]="{ 'is-invalid': GiaMax.touched  && GiaMax.invalid }"
+                           class="form-control form-control-sm">
+                  </td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold;vertical-align: middle;color: #555">Bình quân</td>
+                  <td colspan="2">
+                    <input type="text" (keypress)="isNumberKey($event)" #GiaTb='ngModel' [(ngModel)]="model.GiaTb"
+                           name="GiaTb" style="text-align: right" maxlength="10" id="GiaTb" (blur)="formatNumber()"
+                           [ngClass]="{ 'is-invalid': GiaTb.touched  && GiaTb.invalid }"
+                           class="form-control form-control-sm">
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12"><label class="control-label" style="padding-top: 10px;">Giá CIF<label
+                class="control-label-require">*</label> (Nhập ít nhất 1 dòng dữ liệu)</label>
+                <label
+                  class="control-label-require"></label></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div>
+              <!-- Table  -->
+              <table class="table table-bordered table-striped table-hover" style="max-height: 250px; overflow: scroll">
+                <!-- Table head -->
+                <thead>
+                <tr style="background-color: #e3e3e3; color: #337ab7; text-align: center">
+                  <th rowspan="2">#</th>
+                  <th colspan="4">Kho Long Hậu</th>
+                  <th colspan="4">Kho Bắc Ninh</th>
+                  <th rowspan="2"></th>
+                </tr>
+                <tr style="background-color: #e3e3e3; color: #337ab7; text-align: center">
+                  <th style="top: 28px">Giá CIF</th>
+                  <th style="top: 28px">Loại tiền</th>
+                  <th style="top: 28px">Ngày tờ khai</th>
+                  <th style="top: 28px">Giá hiện hành</th>
+                  <th style="top: 28px">Giá CIF</th>
+                  <th style="top: 28px">Loại tiền</th>
+                  <th style="top: 28px">Ngày tờ khai</th>
+                  <th style="top: 28px">Giá hiện hành</th>
+                </tr>
+                </thead>
+                <!-- Table head -->
+                <!-- Table body -->
+                <tbody>
+                <tr *ngIf="model?.ListProductCIFPrice.length <= 0">
+                  <td colspan="9" class="datarow-null">Dữ liệu không tồn tại</td>
+                </tr>
+                <tr *ngFor="let row of model.ListProductCIFPrice ; let index = index">
+                  <td class="order-number"
+                      style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">{{index + 1}}
+                  </td>
+                  <td class="col-name-right"
+                      style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle; min-width: 80px;max-width: 80px;text-align: right">
+                    <input type="text" #CIFSouth='ngModel' (keypress)="isNumberKey($event)"
+                           [(ngModel)]="row.Cifsouth" name="CIFSouth{{index}}" id="CIFSouth{{index}}" maxlength="12"
+                           style="padding-bottom: 2px;" class="form-control form-control-sm" (blur)="formatNumber()"
+                           [ngClass]="{ 'is-invalid': CIFSouth.touched  && CIFSouth.invalid }">
+                  </td>
+                  <td class="col-name"
+                      style="padding-bottom: 2px; padding-top: 2px; min-width: 120px; vertical-align: middle;">
+                    <ng-select [(ngModel)]="row.LoaiTien" name="LoaiTien{{index}}"
+                               class="select-custom select-full-border" (clear)="clearLoaiTien()">
+                      <ng-option *ngFor="let status of lstCurrencyType"
+                                 [value]="status.CurrencyId">{{status.CurrencyName}}</ng-option>
+                    </ng-select>
+                  </td>
+                  <td class="col-name" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                    <input [(ngModel)]="row.EffectiveDate" name="EffectiveDate{{index}}"
+                           style="height: 31px; font-size: 14px;padding-bottom: 2px; padding-top: 2px; vertical-align: middle;"
+                           placeholder="Chọn ngày tờ khai" type="text" class="form-control" bsDatepicker
+                           placement="top" (ngModelChange)="changeEffectiveDate($event, row)"
+                           [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass:colorTheme, showWeekNumbers:false }">
+                  </td>
+                  <td
+                    style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle; min-width: 110px;max-width: 110px;">
+                    <div class="custom-control custom-checkbox mb-3" style="text-align: center; vertical-align: middle">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="row.IsDefault"
+                             id="IsDefault{{index}}" name="IsDefault{{index}}"
+                             (ngModelChange)="checkIsDefault(index)">
+                      <label class="custom-control-label" for="IsDefault{{index}}"></label>
+                    </div>
+                  </td>
+
+                  <td class="col-name"
+                      style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle; min-width: 80px;max-width: 80px;text-align: right">
+                    <input type="text" #CIFNorth='ngModel' (keypress)="isNumberKey($event)"
+                           [(ngModel)]="row.Cifnorth" name="CIFNorth{{index}}" id="CIFNorth{{index}}"
+                           maxlength="12" [ngClass]="{ 'is-invalid': CIFNorth.touched  && CIFNorth.invalid }"
+                           class="form-control form-control-sm" (blur)="formatNumber()">
+                  </td>
+                  <td class="col-name"
+                      style="padding-bottom: 2px; padding-top: 2px; min-width: 120px; vertical-align: middle;">
+                    <ng-select [(ngModel)]="row.LoaiTienNorth" name="LoaiTienNorth{{index}}"
+                               class="select-custom select-full-border" (clear)="clearLoaiTienNorth()">
+                      <ng-option *ngFor="let status of lstCurrencyType"
+                                 [value]="status.CurrencyId">{{status.CurrencyName}}</ng-option>
+                    </ng-select>
+                  </td>
+                  <td class="col-name-right" style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;">
+                    <input [(ngModel)]="row.EffectiveDateNorth"
+                           name="EffectiveDateNorth{{index}}"
+                           style="height: 31px; font-size: 14px;padding-bottom: 2px; padding-top: 2px; vertical-align: middle;"
+                           placeholder="Chọn ngày tờ khai" type="text" class="form-control" bsDatepicker
+                           placement="top" (ngModelChange)="changeEffectiveDateNorth($event, row)"
+                           [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass:colorTheme, showWeekNumbers:false }">
+                  </td>
+                  <td
+                    style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle;min-width: 110px;max-width: 110px;">
+                    <div class="custom-control custom-checkbox mb-3" style="text-align: center; vertical-align: middle">
+                      <input type="checkbox" class="custom-control-input" [(ngModel)]="row.IsDefaultNorth"
+                             id="IsDefaultNorth{{index}}" name="IsDefaultNorth{{index}}"
+                             (ngModelChange)="checkIsDefaultNorth(index)">
+                      <label class="custom-control-label" for="IsDefaultNorth{{index}}"></label>
+                    </div>
+                  </td>
+
+
+                  <td class="col-action"
+                      style="padding-bottom: 2px; padding-top: 2px; vertical-align: middle; text-align: center">
+                    <a *appCheckpermission="['DEL']" (click)="showConfirmDeleteDialog(row)">
+                      <img [src]=deleteIcon>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <button type="button" class="btn btn-info btn-sm" (click)="addCIFPrice()">
+              <i class="fas fa-plus"></i> Thêm giá CIF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" name="btnSave" *appCheckpermission="['SAVE']" [disabled]="form.invalid"
+              class="btn btn-info btn-sm"
+              (click)="saveData(false)">
+        <i class="far fa-save"></i> Lưu
+      </button>
+      <button type="button" name="btnSaveContinue" [disabled]="form.invalid" class="btn btn-info btn-sm"
+              (click)="saveData(true)" *appCheckpermission="['SAVE','ADD']">
+        <i class="far fa-save"></i> Lưu & Thêm mới
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDialog()">Đóng</button>
+    </div>
+  </div>
+</form>

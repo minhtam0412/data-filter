@@ -1,0 +1,190 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+/*@import "~ng-zorro-antd/style/index.min.css";*/
+/* Import basic styles */
+@import "~ng-zorro-antd/button/style/index.min.css";
+
+/* Import styles of the component */
+
+fieldset {
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+  padding: 20px
+}
+
+.header-row {
+  background-color: #b7c9dc;
+  color: #193048;
+  margin: -2px -5px;
+  font-weight: bold;
+}
+
+.data-row {
+  margin: -2px -5px;
+}
+
+.col-1 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 100px;
+  text-align: center;
+}
+
+.col-2 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 200px;
+}
+
+.col-3 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 300px;
+  text-align: center;
+}
+
+.autocomplete-col-3 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 300px;
+  text-align: center;
+}
+
+
+.col-4 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 400px;
+}
+
+.autocomplete-col-4 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 400px;
+}
+
+.col-5 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 500px;
+}
+
+.autocomplete-col-5 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 500px;
+}
+
+.col-6 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 600px;
+  text-align: left;
+}
+
+.col-7 {
+  border-left: 1px solid #ccc;
+  padding-left: 5px;
+  display: inline-block;
+  width: 700px;
+  text-align: left;
+}
+
+.backdrop-modal {
+  background-color: #495057;
+}
+
+
+/*Custom Zorro Style*/
+
+svg {
+  overflow: hidden;
+  vertical-align: center;
+}
+
+.ant-btn {
+  height: 28px;
+  font-size: 12px;
+}
+
+.ant-select {
+  font-size: 12px;
+}
+
+.ant-select-selection {
+  border-radius: 1px;
+  height: 25px;
+  max-height: 25px;
+  min-height: 25px;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #ced4da !important;
+  box-shadow: none;
+}
+
+.ant-select-dropdown {
+  font-size: 12px;
+}
+
+.ant-select-open .ant-select-selection {
+  box-shadow: none;
+}
+
+.ant-calendar-picker {
+  width: 100%;
+}
+
+.ant-input {
+  font-size: 12px;
+}
+
+.ant-calendar {
+  font-size: 12px;
+}
+
+.ant-calendar-header a {
+  font-size: 12px;
+}
+
+.ant-calendar-footer a {
+  font-size: 12px;
+}
+
+
+/*End custom Zorro Style*/
+
+#printsection,
+#otherprintsection {
+  /* hide the printing component from @media screen */
+  display: none;
+}
+
+@media print {
+  /* invert the display (show/hide) properties of the main */
+  /* aplication component and the printing component       */
+  #printsection {
+    display: block;
+  }
+
+  #notprintsection,
+  #otherprintsection {
+    display: none;
+  }
+}
+
+
+/*custom height cho dropdown của control autocomplete*/
+
+.customdropdownclass {
+  height: 250px;
+}

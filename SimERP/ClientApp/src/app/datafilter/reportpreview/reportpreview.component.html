@@ -1,0 +1,154 @@
+<form #form="ngForm" novalidate>
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h4 class="modal-title">Export dữ liệu</h4>
+      <button type="button" class="close" data-dismiss="modal" (click)="closeDialog()">&times;</button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="modal-body">
+      <div class="form_content_v2">
+        <div class="row col-md-12">
+          <div class="col-sm-1">
+            <div class="input-group mb-3 ">
+              <label>Column:</label>
+            </div>
+          </div>
+          <div class="col-md-10">
+            <ng-multiselect-dropdown
+              [placeholder]="'Chọn cột cần hiển thị'"
+              [data]="dropdownListOriginal"
+              [(ngModel)]="selectedItems" name="selectedItems"
+              [settings]="dropdownSettings" (ngModelChange)="onChanged()">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <br>
+        <div class="table-responsive_v2">
+          <!-- Table  -->
+          <table class="table table-bordered table-striped table-hover">
+            <!-- Table head -->
+            <thead>
+            <tr>
+              <th><input type="checkbox" name="all" [checked]="isAllChecked()" (change)="checkAll($event)"/></th>
+              <th>#</th>
+              <th [ngStyle]="{'display': checkSelected('PhanLoai')?'':'none'}">Phân loại</th>
+              <th [ngStyle]="{'display': checkSelected('NamNhap')?'':'none'}">Năm</th>
+              <th [ngStyle]="{'display': checkSelected('NgayNhap')?'':'none'}">Ngày đăng ký</th>
+              <th [ngStyle]="{'display': checkSelected('ChiCucHaiQuan')?'':'none'}">Chi cục hải quan</th>
+              <th [ngStyle]="{'display': checkSelected('CangXuatNhap')?'':'none'}">Cảng xuất nhập</th>
+              <th [ngStyle]="{'display': checkSelected('TenLoHang')?'':'none'}">Tên lô hàng</th>
+              <th [ngStyle]="{'display': checkSelected('MaDoanhNghiep')?'':'none'}">Mã doanh nghiệp</th>
+              <th [ngStyle]="{'display': checkSelected('DonViDoiTac')?'':'none'}">Đơn vị đối tác</th>
+              <th [ngStyle]="{'display': checkSelected('HsCode')?'':'none'}">Hs Code</th>
+              <th [ngStyle]="{'display': checkSelected('ChungLoaiHangHoaXuatNhap')?'':'none'}">Tên hàng</th>
+              <th [ngStyle]="{'display': checkSelected('DoanhNghiepXuatNhap')?'':'none'}">Tên doanh nghiệp XNK</th>
+              <th [ngStyle]="{'display': checkSelected('NuocXuatXu')?'':'none'}">Tên nước xuất xứ</th>
+              <th [ngStyle]="{'display': checkSelected('DVT')?'':'none'}">Đơn vị tính</th>
+              <th [ngStyle]="{'display': checkSelected('Luong')?'':'none'}">Số lượng</th>
+              <th [ngStyle]="{'display': checkSelected('SoLuongQuyDoi')?'':'none'}">Số lượng quy đổi (kg)</th>
+              <th [ngStyle]="{'display': checkSelected('DonGia')?'':'none'}">Đơn giá</th>
+              <th [ngStyle]="{'display': checkSelected('DonGiaUSD')?'':'none'}">Đơn giá quy đổi(USD/kg)</th>
+              <th [ngStyle]="{'display': checkSelected('TriGia')?'':'none'}">Trị giá</th>
+              <th [ngStyle]="{'display': checkSelected('NgoaiTeThanhToan')?'':'none'}">Nguyên tệ</th>
+              <th [ngStyle]="{'display': checkSelected('TyGiaVnd')?'':'none'}">Tỷ giá VND</th>
+              <th [ngStyle]="{'display': checkSelected('TriGiaVnd')?'':'none'}">Trị giá VND</th>
+              <th [ngStyle]="{'display': checkSelected('TyGiaUsd')?'':'none'}">Tỷ giá USD</th>
+              <th [ngStyle]="{'display': checkSelected('TriGiaUsd')?'':'none'}">Trị giá USD</th>
+              <th [ngStyle]="{'display': checkSelected('DieuKienGiaoHang')?'':'none'}">Điều kiện giao hàng</th>
+              <th [ngStyle]="{'display': checkSelected('DieuKienThanhToan')?'':'none'}">Điều kiện thanh toán</th>
+              <th [ngStyle]="{'display': checkSelected('Tsxnk')?'':'none'}">TS XNK</th>
+              <th [ngStyle]="{'display': checkSelected('ThueXnk')?'':'none'}">Thuế XNK</th>
+              <th [ngStyle]="{'display': checkSelected('Tsttdb')?'':'none'}">TS TTDB</th>
+              <th [ngStyle]="{'display': checkSelected('ThueTtdb')?'':'none'}">Thuế TTDB</th>
+              <th [ngStyle]="{'display': checkSelected('Tsvat')?'':'none'}">TS VAT</th>
+              <th [ngStyle]="{'display': checkSelected('ThueVat')?'':'none'}">Thuế VAT</th>
+              <th [ngStyle]="{'display': checkSelected('PhuThu')?'':'none'}">Phụ thu</th>
+              <th [ngStyle]="{'display': checkSelected('MienThue')?'':'none'}">Miễn thuế</th>
+              <th [ngStyle]="{'display': checkSelected('PhuongTienVanTai')?'':'none'}">Phương tiện vận tải</th>
+              <th [ngStyle]="{'display': checkSelected('TenPhuongTienVanTai')?'':'none'}">Tên phương tiện vận tải</th>
+              <th [ngStyle]="{'display': checkSelected('NuocXuatKhau')?'':'none'}">Nước xuất khẩu</th>
+              <th [ngStyle]="{'display': checkSelected('NuocNhapKhau')?'':'none'}">Nước nhập khẩu</th>
+              <th [ngStyle]="{'display': checkSelected('CangNuocNgoai')?'':'none'}">Cảng nước ngoài</th>
+              <th [ngStyle]="{'display': checkSelected('PhanLoaiTrangThai')?'':'none'}">Phân loại trạng thái</th>
+              <th [ngStyle]="{'display': checkSelected('SoToKhai')?'':'none'}">Số tờ khai</th>
+            </tr>
+            </thead>
+            <!-- Table head -->
+            <!-- Table body -->
+            <tbody>
+            <tr *ngIf="lstDataResult?.length <= 0">
+              <td [attr.colspan]="selectedItems.length+2" class="datarow-null">Dữ liệu không tồn tại</td>
+            </tr>
+            <tr *ngFor="let row of lstDataResult; let index = index">
+              <td class="order-number">
+                <input type="checkbox" name="cbmain{{index}}" [(ngModel)]="row.Selected"/>
+              </td>
+              <td class="order-number">{{index + 1}} </td>
+              <td class="col-name"
+                  [ngStyle]="{'display': checkSelected('PhanLoai')?'':'none'}">{{row.PhanLoai}}</td>
+              <td class="col-name"
+                  [ngStyle]="{'display': checkSelected('NamNhap')?'':'none'}">{{row.NamNhap}}</td>
+              <td class="col-name"
+                  [ngStyle]="{'display': checkSelected('NgayNhap')?'':'none'}">{{row.NgayNhap|date:'dd/MM/yyyy'}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('ChiCucHaiQuan')?'':'none'}">{{row.ChiCucHaiQuan}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('CangXuatNhap')?'':'none'}">{{row.CangXuatNhap}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TenLoHang')?'':'none'}">{{row.TenLoHang}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('MaDoanhNghiep')?'':'none'}">{{row.MaDoanhNghiep}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('DonViDoiTac')?'':'none'}">{{row.DonViDoiTac}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('HsCode')?'':'none'}">{{row.HsCode}}</td>
+              <td class="col-name"
+                  [ngStyle]="{'display': checkSelected('ChungLoaiHangHoaXuatNhap')?'':'none'}">{{row.ChungLoaiHangHoaXuatNhap}}</td>
+              <td class="col-name"
+                  [ngStyle]="{'display': checkSelected('DoanhNghiepXuatNhap')?'':'none'}">{{row.DoanhNghiepXuatNhap}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('NuocXuatXu')?'':'none'}">{{row.NuocXuatXu}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('DVT')?'':'none'}">{{row.Dvt}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('Luong')?'':'none'}">{{row.Luong}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('SoLuongQuyDoi')?'':'none'}">{{row.SoLuongQuyDoi}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('DonGia')?'':'none'}">{{row.DonGia}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('DonGiaUSD')?'':'none'}">{{row.DonGiaUSD}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TriGia')?'':'none'}">{{row.TriGia}}</td>
+              <td class="col-name"
+                  [ngStyle]="{'display': checkSelected('NgoaiTeThanhToan')?'':'none'}">{{row.NgoaiTeThanhToan}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TyGiaVnd')?'':'none'}">{{row.TyGiaVnd}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TriGiaVnd')?'':'none'}">{{row.TriGiaVnd}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TyGiaUsd')?'':'none'}">{{row.TyGiaUsd}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TriGiaUsd')?'':'none'}">{{row.TriGiaUsd}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('DieuKienGiaoHang')?'':'none'}">{{row.DieuKienGiaoHang}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('DieuKienThanhToan')?'':'none'}">{{row.DieuKienThanhToan}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('Tsxnk')?'':'none'}">{{row.Tsxnk}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('ThueXnk')?'':'none'}">{{row.ThueXnk}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('Tsttdb')?'':'none'}">{{row.Tsttdb}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('ThueTtdb')?'':'none'}">{{row.ThueTtdb}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('Tsvat')?'':'none'}">{{row.Tsvat}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('ThueVat')?'':'none'}">{{row.ThueVat}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('PhuThu')?'':'none'}">{{row.PhuThu}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('MienThue')?'':'none'}">{{row.MienThue}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('PhuongTienVanTai')?'':'none'}">{{row.PhuongTienVanTai}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('TenPhuongTienVanTai')?'':'none'}">{{row.TenPhuongTienVanTai}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('NuocXuatKhau')?'':'none'}">{{row.NuocXuatKhau}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('NuocNhapKhau')?'':'none'}">{{row.NuocNhapKhau}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('CangNuocNgoai')?'':'none'}">{{row.CangNuocNgoai}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('PhanLoaiTrangThai')?'':'none'}">{{row.PhanLoaiTrangThai}}</td>
+              <td class="col-name" [ngStyle]="{'display': checkSelected('SoToKhai')?'':'none'}">{{row.SoToKhai}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-12" style="text-align: right">
+          <label style="font-weight: bold">Số lượng sản phẩm: {{this.lstDataResult.length}}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal footer -->
+    <div class="modal-footer">
+      <button type="button" name="btnSave" class="btn btn-info btn-sm" (click)="export()">
+        <i class="far fa-save"></i> Export
+      </button>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDialog()">Đóng
+      </button>
+    </div>
+  </div>
+</form>
